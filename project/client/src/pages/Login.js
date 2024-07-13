@@ -9,33 +9,34 @@ function Login() {
   const onFinish = async (value) => {
     try {
       const response = await LoginUser(value);
-      const response2 = await axios.get('http://localhost:3000/api/users/get-current-user',
-      {
-        headers: {
-          Authorization: `Bearer ${response.token}`,
-        },
-      });
+      if (response.success) {
+        message.success(response.message);
+        localStorage.setItem('token', response.token);
+      
+        const response2 = await axios.get('http://localhost:3000/api/users/get-current-user',
+        {
+          headers: {
+            Authorization: `Bearer ${response.token}`,
+          },
+        });
 
-      const userRole = response2.data.data.role;
+        const userRole = response2.data.data.role;
 
-      if(userRole === 'admin'){
-        navigate('/admin');
-      }
-      else if(userRole === 'partner'){
-        navigate('/partner');
-      }
-      else{
-        navigate('/');
+        if(userRole === 'admin'){
+          navigate('/admin');
+        }
+        else if(userRole === 'partner'){
+          navigate('/partner');
+        }
+        else{
+          navigate('/');
+        }
+      } else {
+        message.error(response.message);
       }
 
       
     
-      if (response.success) {
-        message.success(response.message);
-        localStorage.setItem('token', response.token);
-      } else {
-        message.error(response.message);
-      }
     } catch (error) {
       message.error(error.message);
     }

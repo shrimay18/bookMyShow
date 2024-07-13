@@ -20,7 +20,7 @@ const Profile = () => {
 
     return (
         <>
-        <h1>User Profile Page</h1>
+        <h1>Profile Page</h1>
             <Tabs defaultActiveKey="2" items={items} />
         </>
     )
