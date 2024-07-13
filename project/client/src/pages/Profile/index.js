@@ -1,10 +1,18 @@
 import { Tabs } from 'antd';
 import Bookings from './Bookings';
+import React from 'react';
+import { Navigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const Profile = () => {
     // const onChange = (key) => {
     //     console.log(key);
     //   };
+    const {user} = useSelector((state) => state.user);
+      console.log(user.role);
+      if(user.role !== 'user'){
+        return <Navigate to="/login" />
+      }
       const items = [
         {
           key: '1',
