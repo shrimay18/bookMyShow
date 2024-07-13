@@ -23,8 +23,8 @@ function Forget() {
     }
     const navigate = useNavigate()
     useEffect(() => {
-        if (localStorage.getItem('token')) {
-            navigate("/");
+        if (!localStorage.getItem('token')) {
+            navigate("/forget");
         }
     }, [])
     return (

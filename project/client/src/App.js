@@ -11,8 +11,8 @@ import Admin from "./pages/Admin";
 import BookShow from "./pages/BookShow";
 import SingleMovie from "./pages/SingleMovie";
 import Partner from "./pages/Partner";
-import Forget from "./pages/Forget";
-import Reset from "./pages/Reset";
+import Forget from "./pages/Forget.js";
+import Reset from "./pages/Reset.js";
 
 function App() {
   const { loading } = useSelector((state) => state.loader);
@@ -57,8 +57,8 @@ function App() {
           />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path='/forget' element={<ProtectedRoute><Forget/></ProtectedRoute>}/>
-          <Route path='/reset' element={<ProtectedRoute><Reset/></ProtectedRoute>}/>
+          <Route path='/forget' element={<Forget/>}/>
+          <Route path='/reset' element={<Reset/>}/>
           <Route path="/movie/:id" element={<ProtectedRoute><SingleMovie/></ProtectedRoute>} />
           <Route path="/book-show/:id" element={<ProtectedRoute><BookShow/></ProtectedRoute>} />
         </Routes>
