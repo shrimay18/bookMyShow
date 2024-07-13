@@ -4,12 +4,14 @@ import { Link, useNavigate } from "react-router-dom";
 import { RegisterUser } from "../calls/users";
 
 function Register() {
+  const navigate = useNavigate();
   const onFinish = async (values) => {
     console.log(values);
     try {
       const response = await RegisterUser(values);
       if (response.success) {
         message.success(response.message);
+        navigate("/login");
       } else {
         message.error(response.message);
       }
@@ -18,7 +20,7 @@ function Register() {
     }
   };
 
-  const navigate = useNavigate();
+  
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
