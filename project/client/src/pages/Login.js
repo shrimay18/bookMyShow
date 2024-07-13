@@ -2,23 +2,37 @@ import React, { useEffect } from 'react'
 import { Button, Form, Input, message } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import { LoginUser } from '../calls/users';
+import axios from 'axios';
 
 function Login() {
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if(localStorage.getItem('token')){
-        navigate("/");
-    }
-  }, [navigate]); 
-
-  const onFinish = async (values) => {
+  const onFinish = async (value) => {
     try {
-      const response = await LoginUser(values);
+      const response = await LoginUser(value);
+      const response2 = await axios.get('http://localhost:3000/api/users/get-current-user',
+      {
+        headers: {
+          Authorization: `Bearer ${response.token}`,
+        },
+      });
+
+      const userRole = response2.data.data.role;
+
+      if(userRole === 'admin'){
+        navigate('/admin');
+      }
+      else if(userRole === 'partner'){
+        navigate('/partner');
+      }
+      else{
+        navigate('/');
+      }
+
+      
+    
       if (response.success) {
         message.success(response.message);
         localStorage.setItem('token', response.token);
-        navigate('/');
       } else {
         message.error(response.message);
       }
@@ -26,6 +40,8 @@ function Login() {
       message.error(error.message);
     }
   };
+
+   
 
   return (
     <>

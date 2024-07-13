@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-// import ProtectedRoute from "./components/ProtectedRoute";
+import ProtectedRoute from "./components/ProtectedRoute";
 import { useSelector } from "react-redux";
 import Profile from "./pages/Profile";
 import Admin from "./pages/Admin";
@@ -30,7 +30,9 @@ function App() {
           <Route
             path="/"
             element={
-                <Home />
+                <ProtectedRoute>
+                  <Home />
+                </ProtectedRoute>
             }
           />
           <Route
@@ -48,15 +50,17 @@ function App() {
           <Route
             path="/partner"
             element={
-                <Partner />
+                <ProtectedRoute>
+                  <Partner />
+                </ProtectedRoute>
             }
           />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path='/forget' element={<Forget/>}/>
-          <Route path='/reset' element={<Reset/>}/>
-          <Route path="/movie/:id" element={<SingleMovie/>} />
-          <Route path="/book-show/:id" element={<BookShow/>} />
+          <Route path='/forget' element={<ProtectedRoute><Forget/></ProtectedRoute>}/>
+          <Route path='/reset' element={<ProtectedRoute><Reset/></ProtectedRoute>}/>
+          <Route path="/movie/:id" element={<ProtectedRoute><SingleMovie/></ProtectedRoute>} />
+          <Route path="/book-show/:id" element={<ProtectedRoute><BookShow/></ProtectedRoute>} />
         </Routes>
       </BrowserRouter>
     </div>
